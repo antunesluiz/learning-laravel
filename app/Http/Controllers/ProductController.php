@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,10 +14,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ProductRepositoryInterface $productRepository)
     {
         return Inertia::render('Products/Index', [
-            'products' => Product::all()->load('category')
+            'products' => $productRepository->all()->load('category')
         ]);
     }
 
