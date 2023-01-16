@@ -31,7 +31,7 @@ class ProductFactory extends Factory
             'category_id' => fake()->randomElement($categories),
             'name' => fake()->word(),
             'color' => fake()->safeColorName(),
-            'price' => fake()->randomFloat(3)
+            'price' => fake()->randomFloat(2)
         ];
     }
 }
