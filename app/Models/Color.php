@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Database\Factories\CategoryFactory;
+use Database\Factories\ColorFactory;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Color extends Model
 {
     use HasFactory, HasRelationships;
 
@@ -17,7 +17,7 @@ class Category extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     /**
@@ -27,11 +27,11 @@ class Category extends Model
      */
     protected static function newFactory()
     {
-        return CategoryFactory::new();
+        return ColorFactory::new();
     }
 
     /**
-     * Get the products for the category.
+     * Get the products for the color.
      */
     public function products()
     {

@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Database\Factories\ProductFactory;
+use Illuminate\Database\Eloquent\Concerns\HasRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,9 @@ class Product extends Model
     protected $fillable = [
         'name',
         'color',
-        'price'
+        'price',
+        'category_id',
+        'color_id'
     ];
 
     /**
@@ -37,5 +40,13 @@ class Product extends Model
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    /**
+     * Get the color associated with the product.
+     */
+    public function color()
+    {
+        return $this->hasOne(Color::class, 'id', 'color_id');
     }
 }
