@@ -1,6 +1,7 @@
 <script setup>
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 
 defineProps({
     products: Object,
@@ -17,9 +18,15 @@ defineProps({
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Produtos</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="py-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 text-right">
+                <Link :href="route('products.create')">
+                    <PrimaryButton >
+                        
+                        Cadastrar produto
+                    </PrimaryButton>
+                </Link>
+                <div class="my-4 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="relative overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
