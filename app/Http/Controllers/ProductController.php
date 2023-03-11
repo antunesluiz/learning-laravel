@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
+use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,10 +18,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ProductRepositoryInterface $productRepository)
+    public function index(ProductRepositoryInterface $repository)
     {
         return Inertia::render('Products/Index', [
-            'products' => $productRepository->all()->load('category')
+            'products' => $repository->index()->load('category')->load('color')
         ]);
     }
 
@@ -28,7 +32,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Products/Create', [
+            'categories' => Category::get(),
+            'colors' => Color::get()
+        ]);
     }
 
     /**
@@ -37,9 +44,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request, ProductRepositoryInterface $repository)
     {
-        //
+        $repository->store($request->validated());
+
+        return redirect()->route('products.index');;
     }
 
     /**

@@ -13,7 +13,11 @@ abstract class AbstractRepository {
         return app($this->model);
     }
 
-    public function all() {
+    public function index() {
         return $this->model->all();
+    }
+
+    public function store(array $data) {
+        return $this->model::create($data);
     }
 }

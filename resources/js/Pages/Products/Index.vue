@@ -47,7 +47,7 @@ defineProps({
                                         {{ product.name }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ product.color }}
+                                        {{ product.color.name }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ product.category.name }}
