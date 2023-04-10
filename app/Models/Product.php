@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory, HasRelationships;
+    use HasFactory, HasRelationships, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,18 @@ class Product extends Model
         'price',
         'category_id',
         'color_id'
+    ];
+
+    /**
+     * The attributes that are searchable.
+     *
+     * @var array<int, string>
+     */
+    protected $searchable = [
+        'name',
+        'price',
+        'category.name',
+        'color.name'
     ];
 
     /**

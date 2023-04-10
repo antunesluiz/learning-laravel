@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
@@ -18,10 +19,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ProductRepositoryInterface $repository)
+    public function index(Request $request)
     {
+        $term = $request->query('term') ? $request->query('term') : '';
+
         return Inertia::render('Products/Index', [
-            'products' => $repository->index()->load('category')->load('color')
+            'products'  => ProductResource::collection(Product::search($term)->paginate(6)),
+            'filter'    => $term
         ]);
     }
 
