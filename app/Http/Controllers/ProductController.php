@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ColorResource;
 use App\Models\Category;
 use App\Models\Color;
 use App\Repositories\Contracts\ProductRepositoryInterface;
@@ -42,8 +44,8 @@ class ProductController extends Controller
     public function create()
     {
         return Inertia::render('Products/Create', [
-            'categories' => Category::get(),
-            'colors' => Color::get()
+            'categories' => CategoryResource::collection(Category::get()),
+            'colors' => ColorResource::collection(Color::get())
         ]);
     }
 
@@ -53,7 +55,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request, ProductRepositoryInterface $repository)
+    public function store(ProductRequest $request)
     {
         $this->productService->store($request->validated());
 

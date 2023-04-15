@@ -73,7 +73,7 @@ const submitForm = async () => {
                                     required
                                     autofocus
                                     autocomplete="colorId"
-                                    :options="colors"
+                                    :options="colors.data"
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.color_id" />
@@ -105,7 +105,7 @@ const submitForm = async () => {
                                     required
                                     autofocus
                                     autocomplete="categoryId"
-                                    :options="categories"
+                                    :options="categories.data"
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.category_id" />
