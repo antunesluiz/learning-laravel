@@ -8,6 +8,8 @@ use App\Http\Resources\ColorResource;
 use App\Models\Category;
 use App\Models\Color;
 use App\Repositories\Contracts\ProductRepositoryInterface;
+use App\Services\CategoryService;
+use App\Services\ColorService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -44,8 +46,8 @@ class ProductController extends Controller
     public function create()
     {
         return Inertia::render('Products/Create', [
-            'categories' => CategoryResource::collection(Category::get()),
-            'colors' => ColorResource::collection(Color::get())
+            'categories' => (new CategoryService())->index(),
+            'colors' => (new ColorService())->index()
         ]);
     }
 
