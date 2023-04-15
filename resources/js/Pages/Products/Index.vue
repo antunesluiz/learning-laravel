@@ -17,7 +17,7 @@ let search = ref(props.filter);
 
 watch(search, value => {
     Inertia.get(route('products.index'), {
-        term: value,
+        filter: value,
     }, { 
         preserveState: true 
     });

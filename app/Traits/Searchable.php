@@ -11,14 +11,14 @@ Trait Searchable {
     /**
      * Scope model by search
      */
-    public function scopeSearch(Builder $builder, String $term = '') 
+    public function scopeSearch(Builder $builder, String $filter = '') 
     {
         if (!$this->searchable) {
             throw new Exception("Please define the searchable property.");
         }
         
         if (empty($this->searchable)) {
-            throw new Exception("Please define the attributes that are searchable.");
+            throw new Exception("Please define the attributes that are searchables.");
         } 
         
         foreach ($this->searchable as $searchable) {
@@ -26,12 +26,12 @@ Trait Searchable {
                 $relation = Str::beforeLast($searchable, '.');
                 $column = Str::afterLast($searchable, '.');
 
-                $builder->orWhereRelation($relation, $column, 'like', "%$term%");
+                $builder->orWhereRelation($relation, $column, 'like', "%$filter%");
 
                 continue;
             }
 
-            $builder->orWhere($searchable, 'like', "%$term%");
+            $builder->orWhere($searchable, 'like', "%$filter%");
         }
 
         return $builder;

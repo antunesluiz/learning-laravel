@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Color;
-use App\Models\Product;
-use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct()
+    {
+        $this->productService = new ProductService();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,11 +26,11 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $term = $request->query('term') ? $request->query('term') : '';
+        $filterData = $request->query('filter') ? $request->query('filter') : '';
 
         return Inertia::render('Products/Index', [
-            'products'  => ProductResource::collection(Product::search($term)->paginate(6)),
-            'filter'    => $term
+            'products'  => $this->productService->index($filterData),
+            'filter'    => $filterData
         ]);
     }
 
@@ -50,7 +55,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request, ProductRepositoryInterface $repository)
     {
-        $repository->store($request->validated());
+        $this->productService->store($request->validated());
 
         return redirect()->route('products.index');;
     }
