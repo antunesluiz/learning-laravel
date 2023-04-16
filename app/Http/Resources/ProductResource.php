@@ -18,8 +18,8 @@ class ProductResource extends JsonResource
             'id'        => $this->id,
             'name'      => $this->name,
             'price'     => $this->price,
-            'category'  => $this->category,
-            'color'     => $this->color
+            'category'  => CategoryResource::make($this->category),
+            'color'     => ColorResource::make($this->color)
         ];
     }
 }
